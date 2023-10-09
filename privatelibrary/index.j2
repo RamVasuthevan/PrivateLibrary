@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Private Library</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .format-icon {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<table>
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Formats</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for entry in items %}
+        <tr>
+            <td>{{ entry.title }}</td>
+            <td>{{ entry.author }}</td>
+            <td>
+                {% if "web.archive.org" not in entry.url %}
+                <a href="{{ entry.url }}" title="Article"><span class="format-icon">🔗</span></a>
+                <a href="https://web.archive.org/web/0/{{ entry.url }}" title="Oldest Archived Version on Wayback Machine"><img src="https://archive.org/offshoot_assets/favicon.ico" alt="Wayback Machine" class="format-icon" width="16" height="16"></a>
+                {% else %}
+                <a href="{{ entry.url }}" title="Archived Article"><img src="https://archive.org/offshoot_assets/favicon.ico" alt="Wayback Machine" class="format-icon" width="16" height="16"></a>
+                {% endif %}
+                {% if entry.markdown %}
+                <a href="{{ entry.markdown }}" title="Markdown"><img src="Markdown-mark.svg" alt="Markdown" class="format-icon" width="16" height="16"></a>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+</body>
+</html>
